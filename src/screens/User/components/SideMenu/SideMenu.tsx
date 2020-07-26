@@ -12,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 import { useStyles } from './styles';
 
@@ -22,6 +23,12 @@ const getUserAvatarSymbols = (name: string): string => {
 
 const renderItems = (getNavigateClickHandler: (path: string) => () => void): JSX.Element => (
   <>
+    <ListItem button onClick={getNavigateClickHandler('/planning')}>
+      <ListItemIcon>
+        <DateRangeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Планування" />
+    </ListItem>
     <ListItem button onClick={getNavigateClickHandler('/dashboard')}>
       <ListItemIcon>
         <DashboardIcon />

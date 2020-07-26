@@ -30,15 +30,24 @@ export const useStore = (): Hook => {
     }
   }
 
-  const getStatementCurrentMonth = async () => {
-    const items = await StatementApi.getForMonth();
+  const getStatementCurrentMonth = async (month: number) => {
+    const items = await StatementApi.getForMonth(month);
     dispatch(StatementActions.setStatement(items));
+  }
+
+  const getCurrentMonth = () => {
+    const month = new Date().getMonth();
+    dispatch(UserActions.setMonth(month));
   }
 
   React.useEffect(() => {
     getUserInfo();
-    getStatementCurrentMonth();
+    getCurrentMonth();
   }, []);
+
+  React.useEffect(() => {
+    getStatementCurrentMonth(user.month);
+  }, [user.month]);
 
   return {
     userName: user.name,

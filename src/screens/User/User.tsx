@@ -24,7 +24,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-import { SideMenu, Header } from './components';
+import { SideMenu, Header, MonthSelect } from './components';
 import { Dashboard } from './screens';
 import { useStore } from './useStore';
 
@@ -142,6 +142,7 @@ export const User: React.FC = () => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          <MonthSelect />
           <Route path="/dashboard">
             <Dashboard />
           </Route>

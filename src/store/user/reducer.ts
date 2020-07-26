@@ -6,7 +6,8 @@ import { UserActionScheme, UserActions } from './actions';
 type UserReducer = Reducer<UserState, UserActionScheme>;
 
 const initState: UserState = {
-  name: ''
+  name: '',
+  month: 0,
 };
 
 export const userReducer: UserReducer = (
@@ -18,6 +19,11 @@ export const userReducer: UserReducer = (
       return {
         ...state,
         name: payload as string,
+      }
+    case UserActions.SetMonth:
+      return {
+        ...state,
+        month: payload as number,
       }
     default:
       return state;
