@@ -49,6 +49,7 @@ export const SideMenu: React.FC<Props> = ({
     paper: clsx(classes.drawerPaper, !drawerOpen && classes.drawerPaperClose),
   };
   const userNameClasses = clsx(classes.userName, !drawerOpen && classes.userNameHidden);
+  const dateClasses = clsx(classes.date, !drawerOpen && classes.dateHidden);
 
   const getNavigateClickHandler = React.useCallback((path: string) => () => {
     history.push(path);
@@ -70,6 +71,12 @@ export const SideMenu: React.FC<Props> = ({
         <Avatar>{getUserAvatarSymbols(userName)}</Avatar>
         <div className={userNameClasses}>
           <Typography variant="h6">{userName}</Typography>
+        </div>
+      </div>
+      <Divider />
+      <div className={classes.dateContainer}>
+        <div className={dateClasses}>
+          <Typography variant="body2">Липень 2020</Typography>
         </div>
       </div>
       <Divider />

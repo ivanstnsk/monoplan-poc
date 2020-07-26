@@ -1,13 +1,11 @@
-import * as client from './client';
+// import * as client from './client';
+import { StatementRecord } from '../store/statement/statement.types';
 
-type ResPersonalClientInfo = {
-  clientId: string;
-  name: string;
-  webHookUrl: string;
-  accounts: Array<any>;
-}
+import { MOCK_STATEMENT } from './mock-data';
 
-export const getForMonth = async (): Promise<Array<any>> => {
+type ResPersonalStatement = Array<StatementRecord>;
+
+export const getForMonth = async (): Promise<ResPersonalStatement> => {
   // const unixStart = new Date(`2020.${month}.01`).getTime() / 1000;
   // const unixEnd = new Date(`2020.${month}.${new Date(2020, month, 0).getDate()}`).getTime() / 1000;
 
@@ -22,5 +20,5 @@ export const getForMonth = async (): Promise<Array<any>> => {
   // }
   // return null;
 
-  return Promise.resolve([]);
+  return Promise.resolve(MOCK_STATEMENT);
 }

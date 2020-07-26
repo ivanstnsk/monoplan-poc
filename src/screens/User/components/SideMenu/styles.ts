@@ -64,5 +64,18 @@ export const useStyles = makeStyles((theme) => ({
   },
   userNameHidden: {
     display: 'none',
+  },
+  dateContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  date: {
+    display: 'visible',
+  },
+  dateHidden: {
+    display: 'none',
   }
 }));
