@@ -24,7 +24,6 @@ type ChartItem = {
   day: string;
   minus: number;
   plus: number;
-  balance: number;
 }
 
 interface Props {
