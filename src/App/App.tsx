@@ -23,7 +23,7 @@ const AppInner: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="/monoplan-poc">
         <AppInner />
       </Router>
     </Provider>
