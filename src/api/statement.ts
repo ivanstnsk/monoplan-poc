@@ -1,7 +1,7 @@
 import * as client from './client';
 import { StatementRecord } from '../store/statement/statement.types';
 
-import { MOCK_STATEMENT } from './mock-data';
+// import { MOCK_STATEMENT } from './mock-data';
 
 type ResPersonalStatement = Array<StatementRecord>;
 

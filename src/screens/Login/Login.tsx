@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
   const handleLoginClick = React.useCallback((event: any) => {
     event.preventDefault();
     Store.onSetToken(token);
-  }, [token]);
+  }, [Store, token]);
 
   return (
     <Container component="main" maxWidth="xs">

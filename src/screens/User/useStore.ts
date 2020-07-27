@@ -23,31 +23,31 @@ export const useStore = (): Hook => {
     dispatch(AuthActions.removeToken());
   }
 
-  const getUserInfo = async () => {
+  const getUserInfo = React.useCallback(async () => {
     const userName = await UserApi.getUserInfo();
     if (userName) {
       dispatch(UserActions.setName(userName));
     }
-  }
+  }, [dispatch]);
 
-  const getStatementCurrentMonth = async (month: number) => {
+  const getStatementCurrentMonth = React.useCallback(async (month: number) => {
     const items = await StatementApi.getForMonth(month);
     dispatch(StatementActions.setStatement(items));
-  }
+  }, [dispatch]);
 
-  const getCurrentMonth = () => {
+  const getCurrentMonth = React.useCallback(() => {
     const month = new Date().getMonth();
     dispatch(UserActions.setMonth(month));
-  }
+  }, [dispatch]);
 
   React.useEffect(() => {
     getUserInfo();
     getCurrentMonth();
-  }, []);
+  }, [getUserInfo, getCurrentMonth]);
 
   React.useEffect(() => {
     getStatementCurrentMonth(user.month);
-  }, [user.month]);
+  }, [getStatementCurrentMonth, user.month]);
 
   return {
     userName: user.name,
