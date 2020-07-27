@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "efe6dc50114b56665dc4b5d1c873200d",
+    "revision": "41327fc06c93f4f9a8a85b4cc8bf6ac9",
     "url": "/monoplan-poc/index.html"
   },
   {
-    "revision": "44eb03fe2d55fdc19c55",
+    "revision": "98656a5b5d4f47369a28",
     "url": "/monoplan-poc/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/monoplan-poc/static/js/2.10ac838c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "44eb03fe2d55fdc19c55",
-    "url": "/monoplan-poc/static/js/main.c65cb8d8.chunk.js"
+    "revision": "98656a5b5d4f47369a28",
+    "url": "/monoplan-poc/static/js/main.a9b4b218.chunk.js"
   },
   {
     "revision": "f949ac428b7290575222",
