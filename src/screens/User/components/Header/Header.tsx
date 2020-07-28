@@ -1,5 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -15,12 +16,25 @@ interface Props {
   onLogout: () => void;
 }
 
+const getPageTitle = (pathname: string): string => {
+  switch (pathname) {
+    case '/planning':
+      return 'Планування';
+    case '/dashboard':
+      return 'Дашборд';
+    default:
+      return '';
+  }
+}
+
 export const Header: React.FC<Props> = ({
   drawerOpen,
   onDrawerToggleClick,
   onLogout,
 }) => {
   const classes = useStyles();
+  const location = useLocation();
+  const pageTitle = getPageTitle(location.pathname);
 
   const appClasses = clsx(classes.appBar, drawerOpen && classes.appBarShift);
   const drawIconClasses = clsx(classes.menuButton, drawerOpen && classes.menuButtonHidden);
@@ -38,7 +52,7 @@ export const Header: React.FC<Props> = ({
           <MenuIcon />
         </IconButton>
         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-          Page
+          {pageTitle}
         </Typography>
         <IconButton color="inherit" onClick={onLogout}>
           <ExitToAppIcon />
