@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/monoplan-poc/precache-manifest.33066a6eadc05cac9cc453f1f28d4055.js"
+  "/monoplan-poc/precache-manifest.27c6922e6cf91b94b4d5058656beb408.js"
 );
 
 self.addEventListener('message', (event) => {
