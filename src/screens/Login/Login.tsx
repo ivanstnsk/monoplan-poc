@@ -33,7 +33,7 @@ export const Login: React.FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Мiй токен
+          Mono токен
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
