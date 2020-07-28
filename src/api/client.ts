@@ -1,12 +1,15 @@
 type Method = 'get';
 
 const req = (method: Method, url: string) => {
-  const token = localStorage.getItem('token');
+  const authData = localStorage.getItem('persist:auth');
   const headers = new Headers();
   const fullUrl = `https://api.monobank.ua/${url}`;
 
-  if (token) {
-    headers.append('X-Token', token);
+  if (authData) {
+    const { token } = JSON.parse(authData);
+    if (token) {
+      headers.append('X-Token', token.substring(1, token.length - 1));
+    }
   }
 
   return fetch(fullUrl, {

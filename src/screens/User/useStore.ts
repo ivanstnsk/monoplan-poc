@@ -19,7 +19,6 @@ export const useStore = (): Hook => {
   const user = useSelector<RootState, UserState>(state => state.user);
 
   const onRemoveToken = () => {
-    localStorage.removeItem('token');
     dispatch(AuthActions.removeToken());
   }
 

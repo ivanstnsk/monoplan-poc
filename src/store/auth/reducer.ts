@@ -6,7 +6,7 @@ import { AuthActionScheme, AuthActions } from './actions';
 type AuthReducer = Reducer<AuthState, AuthActionScheme>;
 
 const initState: AuthState = {
-  token: localStorage.getItem('token'),
+  token: '',
 };
 
 export const authReducer: AuthReducer = (

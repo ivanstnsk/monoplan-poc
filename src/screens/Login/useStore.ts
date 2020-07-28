@@ -11,7 +11,6 @@ export const useStore = (): Hook => {
 
   const onSetToken = (token: string) => {
     if (token && token.length > 0) {
-      localStorage.setItem('token', token);
       dispatch(setToken(token));
     }
   }
