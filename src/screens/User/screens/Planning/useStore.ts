@@ -1,57 +1,25 @@
-import { useSelector } from 'react-redux';
+import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../../../store/store.types';
-import { UserState } from '../../../../store/user/user.types';
-import { StatementState } from '../../../../store/statement/statement.types';
-
-type StatementGroupedByDay = {
-  day: string;
-  minus: number;
-  plus: number;
-}
+import { PlanningState, PlanningYear } from '../../../../store/planning/planning.types';
+import * as PlanningActions from '../../../../store/planning/actions';
 
 type Hook = {
-  statementGroupedByDay: Array<StatementGroupedByDay>;
+  plans: Array<PlanningYear>;
+  handleCreatePlanningYear: (year: number) => void;
 }
 
 export const useStore = (): Hook => {
-  const statement = useSelector<RootState, StatementState>(state => state.statement);
-  const user = useSelector<RootState, UserState>(state => state.user);
+  const dispatch = useDispatch();
+  const planning = useSelector<RootState, PlanningState>(state => state.planning);
 
-  const dates = new Map<string, StatementGroupedByDay>();
-
-  const maxDays = new Date(2020, user.month, 0).getDate();
-  for (let i = 0; i < maxDays; i += 1) {
-    const day = `${i}`;
-    dates.set(day, {
-      day,
-      minus: 0,
-      plus: 0,
-    })
-  }
-
-  statement.items.forEach(({ time, amount, balance }) => {
-    const m = amount / 100;
-    const entry: StatementGroupedByDay = {
-      day: `${new Date(time * 1000).getDate()}`,
-      minus: m < 0 ? m : 0,
-      plus: m > 0 ? m : 0,
-    };
-    const item = dates.get(entry.day);
-    entry.minus += item ? item.minus : 0;
-    entry.plus += item ? item.plus : 0;
-    dates.set(entry.day, entry);
-  });
-
-  const statementGroupedByDay: Array<StatementGroupedByDay> = [];
-  dates.forEach((value) => {
-    statementGroupedByDay.push({
-      ...value,
-      minus: value.minus * -1,
-    });
-  });
+  const handleCreatePlanningYear = React.useCallback((year: number) => {
+    dispatch(PlanningActions.createPlanningYear(year));
+  }, [dispatch]);
 
   return {
-    statementGroupedByDay,
+    plans: planning.plans,
+    handleCreatePlanningYear,
   }
 }
