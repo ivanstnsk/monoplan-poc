@@ -4,13 +4,15 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+// import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+import { getMonthNameByIndex } from '../../../../../../utils';
 
 import { useStore } from './useStore';
 import { useStyles } from './styles';
@@ -33,11 +35,13 @@ export const Month: React.FC = () => {
       )}
       {Store.monthPlan && (
         <>
-          <div className={classes.titleContainer}>
-            <Typography component="h1" variant="h4">
-              Expenses
-            </Typography>
-          </div>
+          {params.month && params.year && (
+            <div className={classes.titleContainer}>
+              <Typography component="h1" variant="h4">
+                {`${getMonthNameByIndex(params.month)} ${params.year}`}
+              </Typography>
+            </div>
+          )}
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               <Typography component="h2" variant="h5">

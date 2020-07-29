@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
 // import { PlanningMonth } from '../../../../../../store/planning/planning.types';
+import { getMonthNameByIndex } from '../../../../../../utils';
 
 import { useStore } from './useStore';
 import { useStyles } from './styles';
@@ -20,7 +21,7 @@ const renderMonthButtons = (month: string, onClick: () => void) => {
       color="primary"
       onClick={onClick}
     >
-      {month}
+      {getMonthNameByIndex(month)}
     </Button>
   );
 }
