@@ -7,4 +7,16 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  titleContainer: {
+    marginBottom: 16,
+  },
+  card: {
+    display: 'flex',
+  },
+  cardDetails: {
+    flex: 1,
+  },
+  tableWrapper: {
+    marginTop: 24,
+  }
 }));

@@ -14,6 +14,6 @@ const MONTHS = {
 };
 
 
-export const getMonthNameByIndex = (month: number): string => {
+export const getMonthNameByIndex = (month: string): string => {
   return MONTHS[month] || 'Invalid month';
 }

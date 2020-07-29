@@ -1,1 +1,1 @@
-export * from './month';
+export { getMonthNameByIndex } from './month';

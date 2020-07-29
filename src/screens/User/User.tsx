@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
-import { SideMenu, Header, MonthSelect, Breadcrumbs } from './components';
+import { SideMenu, Header, Breadcrumbs } from './components';
 import { Dashboard, Planning } from './screens';
 import { useStore } from './useStore';
 import { useStyles } from './styles';
@@ -40,7 +40,7 @@ export const User: React.FC = () => {
         <div className={classes.appBarSpacer} />
         <Breadcrumbs />
         <Container maxWidth="lg" className={classes.container}>
-          <MonthSelect />
+          {/* <MonthSelect /> */}
           <Route path="/dashboard">
             <Dashboard />
           </Route>

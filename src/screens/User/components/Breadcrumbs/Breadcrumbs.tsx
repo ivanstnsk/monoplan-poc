@@ -4,12 +4,23 @@ import BreadcrumbsUI from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
+import { getMonthNameByIndex } from '../../../../utils';
+
 import { useStyles } from './styles';
 
 const renderLink = (path: string, label: string, onClick: () => void, last = false) => {
+  let finalLabel = label;
+
+  if (label.startsWith('year-')) {
+    finalLabel = label.substring(5, label.length);
+  } else if (label.startsWith('month-')) {
+    const month = label.substring(6, label.length);
+    finalLabel = getMonthNameByIndex(month);
+  }
+
   if (last) {
     return (
-      <Typography color="textPrimary">{label}</Typography>
+      <Typography color="textPrimary">{finalLabel}</Typography>
     );
   }
   return (
@@ -19,7 +30,7 @@ const renderLink = (path: string, label: string, onClick: () => void, last = fal
       href={path}
       onClick={onClick}
     >
-      {label}
+      {finalLabel}
     </Link>
   );
 }

@@ -32,7 +32,7 @@ export const Year: React.FC = () => {
   const Store = useStore(params.year);
 
   const getMonthClickHandler = React.useCallback((month: string) => () => {
-    history.push(`/planning/year/${params.year}/month/${month}`);
+    history.push(`/planning/year-${params.year}/month-${month}`);
   }, []);
 
   return (

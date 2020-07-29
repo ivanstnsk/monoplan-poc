@@ -2,15 +2,15 @@ import { PlanningYear, Plan } from './planning.types';
 
 export const createEmptyPlanningYear = (year: number): PlanningYear => {
   const months = {};
-  for (let i = 1; i < 13; i += 1) {
+  for (let i = 0; i < 12; i += 1) {
     months[i] = {
       prognosis: {
-        income: 0,
-        expenses: 0,
+        income: i * 10,
+        expenses: i * 11,
       },
       actual: {
-        income: 0,
-        expenses: 0,
+        income: i * 12,
+        expenses: i * 13,
       }
     } as Plan;
   }

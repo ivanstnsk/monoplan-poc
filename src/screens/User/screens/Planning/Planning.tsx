@@ -33,7 +33,7 @@ export const Planning: React.FC = () => {
   }, [Store]);
 
   const getPlanningYearClickHandler = React.useCallback((year: number) => () => {
-    history.push(`/planning/year/${year}`);
+    history.push(`/planning/year-${year}`);
   }, []);
 
   return (
@@ -60,10 +60,10 @@ export const Planning: React.FC = () => {
           })}</div>
         )}
       </div>
-      <Route exact path="/planning/year/:year">
+      <Route exact path="/planning/year-:year">
         <Year />
       </Route>
-      <Route exact path="/planning/year/:year/month/:month">
+      <Route exact path="/planning/year-:year/month-:month">
         <Month />
       </Route>
     </>
