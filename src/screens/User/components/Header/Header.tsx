@@ -22,6 +22,8 @@ const getPageTitle = (pathname: string): string => {
       return 'Планування';
     case '/dashboard':
       return 'Дашборд';
+    case '/categories':
+      return 'Категорії доходів і витрат';
     default:
       return '';
   }

@@ -13,6 +13,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import CategoryIcon from '@material-ui/icons/Category';
 
 import { useStyles } from './styles';
 
@@ -28,6 +29,12 @@ const renderItems = (getNavigateClickHandler: (path: string) => () => void): JSX
         <DateRangeIcon />
       </ListItemIcon>
       <ListItemText primary="Планування" />
+    </ListItem>
+    <ListItem button onClick={getNavigateClickHandler('/categories')}>
+      <ListItemIcon>
+        <CategoryIcon />
+      </ListItemIcon>
+      <ListItemText primary="Категорії доходів і витрат" />
     </ListItem>
     <ListItem button onClick={getNavigateClickHandler('/dashboard')}>
       <ListItemIcon>
