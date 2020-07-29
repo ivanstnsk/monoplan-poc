@@ -8,6 +8,7 @@ import { authReducer } from './auth/reducer';
 import { userReducer } from './user/reducer';
 import { statementReducer } from './statement/reducer';
 import { planningReducer } from './planning/reducer';
+import { categoriesReducer } from './categories/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -19,9 +20,15 @@ const planningPersistConfig = {
   storage: storage,
 };
 
+const categoriesPersistConfig = {
+  key: 'categories',
+  storage: storage,
+};
+
 export const reducer = combineReducers<RootState>({
   auth: persistReducer(authPersistConfig, authReducer) as any,
   user: userReducer,
   statement: statementReducer,
   planning: persistReducer(planningPersistConfig, planningReducer) as any,
+  categories: persistReducer(categoriesPersistConfig, categoriesReducer) as any,
 });
