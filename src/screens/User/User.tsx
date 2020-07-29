@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
 import { SideMenu, Header, Breadcrumbs } from './components';
-import { Dashboard, Planning } from './screens';
+import { Dashboard, Planning, Categories } from './screens';
 import { useStore } from './useStore';
 import { useStyles } from './styles';
 
@@ -46,6 +46,9 @@ export const User: React.FC = () => {
           </Route>
           <Route path="/planning">
             <Planning />
+          </Route>
+          <Route path="/categories">
+            <Categories />
           </Route>
         </Container>
       </main>
