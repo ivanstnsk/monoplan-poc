@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
-import MaterialTable, { Column } from 'material-table';
+import MaterialTable from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -75,14 +75,14 @@ export const Categories: React.FC = () => {
       Store.onAddCategory(categoryType, data.name);
       return Promise.resolve();
     }
-  }, []);
+  }, [Store]);
 
   const getRowUpdateHandler = React.useCallback((categoryType: CategoryType) => {
     return async (data: any, oldData: any): Promise<void> => {
       Store.onUpdateCategory(categoryType, data.id, data.name)
       return Promise.resolve();
     }
-  }, []);
+  }, [Store]);
 
   const getRowDeleteHandler = React.useCallback((categoryType: CategoryType) => {
     return async (data: any): Promise<void> => {
@@ -90,7 +90,7 @@ export const Categories: React.FC = () => {
       Store.onDeleteCategory(categoryType, id);
       return Promise.resolve();
     }
-  }, []);
+  }, [Store]);
 
   return (
     <div className={classes.paper}>

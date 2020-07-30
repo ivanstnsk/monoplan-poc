@@ -18,7 +18,7 @@ export const useStore = (): Hook => {
 
   const handleCreatePlanningYear = React.useCallback((year: number) => {
     dispatch(PlanningActions.createPlanningYear(year, categories));
-  }, [dispatch]);
+  }, [dispatch, categories]);
 
   return {
     plans: planning.plans,

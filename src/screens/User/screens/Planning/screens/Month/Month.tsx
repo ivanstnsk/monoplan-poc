@@ -4,21 +4,14 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
-import MaterialTable, { Column } from 'material-table';
+import MaterialTable from 'material-table';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import Clear from '@material-ui/icons/Clear';
 import Edit from '@material-ui/icons/EditOutlined';
 
-import { Category, CategoryType } from '../../../../../../store/categories/categories.types';
+import { CategoryType } from '../../../../../../store/categories/categories.types';
 import { getMonthNameByIndex } from '../../../../../../utils';
 
 import { ProgressBar } from './components';

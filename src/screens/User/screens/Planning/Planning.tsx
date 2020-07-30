@@ -34,7 +34,7 @@ export const Planning: React.FC = () => {
 
   const getPlanningYearClickHandler = React.useCallback((year: number) => () => {
     history.push(`/planning/year-${year}`);
-  }, []);
+  }, [history]);
 
   return (
     <>

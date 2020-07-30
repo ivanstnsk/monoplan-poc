@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 
 import { CategoriesState } from '../categories/categories.types';
 
-import { PlanningState, Plan } from './planning.types';
+import { PlanningState } from './planning.types';
 import { PlanningActionScheme, PlanningActions } from './actions';
 import { createEmptyPlanningYear } from './utils';
 

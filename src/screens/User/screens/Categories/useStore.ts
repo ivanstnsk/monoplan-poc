@@ -21,7 +21,7 @@ export const useStore = (): Hook => {
   const handleAddCategory = (type: CategoryType, name: string): void => {
     if (name) {
       const category: Category = {
-        id: `f${(+new Date).toString(16)}`,
+        id: `f${(+new Date()).toString(16)}`,
         type,
         name,
       };

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../../../store/store.types';
 import { PlanningState, Plan } from '../../../../../../store/planning/planning.types';
-import { CategoriesState } from '../../../../../../store/categories/categories.types';
+// import { CategoriesState } from '../../../../../../store/categories/categories.types';
 
 export type CategoryPrognosis = {
   id: string;

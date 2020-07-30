@@ -34,7 +34,7 @@ export const Year: React.FC = () => {
 
   const getMonthClickHandler = React.useCallback((month: string) => () => {
     history.push(`/planning/year-${params.year}/month-${month}`);
-  }, []);
+  }, [history, params.year]);
 
   return (
     <div className={classes.paper}>
