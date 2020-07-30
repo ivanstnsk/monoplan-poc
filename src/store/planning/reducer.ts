@@ -1,21 +1,12 @@
 import { Reducer } from 'redux';
 
-import { PlanningState, PlanningYear, Plan } from './planning.types';
+import { CategoriesState } from '../categories/categories.types';
+
+import { PlanningState, Plan } from './planning.types';
 import { PlanningActionScheme, PlanningActions } from './actions';
 import { createEmptyPlanningYear } from './utils';
 
 type PlanningReducer = Reducer<PlanningState, PlanningActionScheme>;
-
-const initPlan: Plan = {
-  prognosis: {
-    income: 0,
-    expenses: 0,
-  },
-  actual: {
-    income: 0,
-    expenses: 0,
-  }
-}
 
 const initState: PlanningState = {
   plans: []
@@ -27,7 +18,10 @@ export const planningReducer: PlanningReducer = (
 ) => {
   switch (type) {
     case PlanningActions.CreatePlanningYear:
-      const year = payload as number;
+      const { year, categoriesState } = payload as {
+        year: number;
+        categoriesState: CategoriesState;
+      };
       const y = state.plans.filter((planningYear) => planningYear.year === year);
 
       if (y.length > 0) {
@@ -38,7 +32,7 @@ export const planningReducer: PlanningReducer = (
         ...state,
         plans: [
           ...state.plans,
-          createEmptyPlanningYear(year),
+          createEmptyPlanningYear(year, categoriesState),
         ]
       }
     default:

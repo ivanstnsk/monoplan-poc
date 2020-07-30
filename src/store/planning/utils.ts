@@ -1,17 +1,37 @@
+import { CategoriesState } from '../categories/categories.types';
+
 import { PlanningYear, Plan } from './planning.types';
 
-export const createEmptyPlanningYear = (year: number): PlanningYear => {
+export const createEmptyPlanningYear = (year: number, categoriesState: CategoriesState): PlanningYear => {
   const months = {};
   for (let i = 0; i < 12; i += 1) {
     months[i] = {
-      prognosis: {
-        income: i * 10,
-        expenses: i * 11,
-      },
-      actual: {
-        income: i * 12,
-        expenses: i * 13,
-      }
+      income: categoriesState.income.map(category => {
+        const prognosis = 100;
+        const actual = 50;
+        const difference = prognosis - actual;
+
+        return {
+          id: category.id,
+          name: category.name,
+          prognosis,
+          actual,
+          difference,
+        }
+      }),
+      expenses: categoriesState.expenses.map(category => {
+        const prognosis = 100;
+        const actual = 50;
+        const difference = prognosis - actual;
+
+        return {
+          id: category.id,
+          name: category.name,
+          prognosis,
+          actual,
+          difference,
+        }
+      }),
     } as Plan;
   }
   const planningYear: PlanningYear = {

@@ -1,12 +1,14 @@
+export type CategoryPrognosis = {
+  id: string;
+  name: string;
+  prognosis: number;
+  actual: number;
+  difference: number;
+}
+
 export type Plan = {
-  prognosis: {
-    income: number;
-    expenses: number;
-  },
-  actual: {
-    income: number;
-    expenses: number;
-  }
+  income: Array<CategoryPrognosis>;
+  expenses: Array<CategoryPrognosis>;
 }
 
 export type PlanningYear = {
