@@ -12,10 +12,11 @@ import Clear from '@material-ui/icons/Clear';
 import Edit from '@material-ui/icons/EditOutlined';
 
 import { CategoryType } from '../../../../../../store/categories/categories.types';
+import { CategoryPrognosis } from '../../../../../../store/planning/planning.types';
 import { getMonthNameByIndex } from '../../../../../../utils';
 
 import { ProgressBar } from './components';
-import { useStore, CategoryPrognosis, Balance } from './useStore';
+import { useStore, Balance } from './useStore';
 import { useStyles } from './styles';
 
 type RouteParams = {

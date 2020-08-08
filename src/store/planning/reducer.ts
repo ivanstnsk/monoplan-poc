@@ -1,15 +1,12 @@
 import { Reducer } from 'redux';
 
-import { CategoriesState } from '../categories/categories.types';
-
-import { PlanningState } from './planning.types';
+import { PlanningState, PlanningYear, PlanningMonth } from './planning.types';
 import { PlanningActionScheme, PlanningActions } from './actions';
-import { createEmptyPlanningYear } from './utils';
 
 type PlanningReducer = Reducer<PlanningState, PlanningActionScheme>;
 
 const initState: PlanningState = {
-  plans: []
+  plans: {}
 };
 
 export const planningReducer: PlanningReducer = (
@@ -17,24 +14,80 @@ export const planningReducer: PlanningReducer = (
   { type, payload },
 ) => {
   switch (type) {
-    case PlanningActions.CreatePlanningYear:
-      const { year, categoriesState } = payload as {
-        year: number;
-        categoriesState: CategoriesState;
-      };
-      const y = state.plans.filter((planningYear) => planningYear.year === year);
+    case PlanningActions.CreateYear: {
+      const year = payload as number
 
-      if (y.length > 0) {
+      if (state.plans[year]) {
         return state;
       }
 
+      const newYear: PlanningYear = {
+        year,
+        months: {}
+      };
+
       return {
         ...state,
-        plans: [
+        plans: {
           ...state.plans,
-          createEmptyPlanningYear(year, categoriesState),
-        ]
+          [year]: newYear,
+        }
       }
+    }
+    case PlanningActions.CreateMonth: {
+      const { year, month } = payload as { year: number, month: number };
+
+      if (!state.plans[year]) {
+        return state;
+      }
+      if (month < 0 || month > 11) {
+        return state;
+      }
+
+      const newMonth: PlanningMonth = {
+        month,
+        income: [],
+        expenses: [],
+      };
+
+      return {
+        ...state,
+        plans: {
+          ...state.plans,
+          [year]: {
+            year,
+            months: {
+              ...state.plans[year].months,
+              [month]: newMonth,
+            }
+          }
+        }
+      }
+    }
+    case PlanningActions.RemoveMonth: {
+      const { year, month } = payload as { year: number, month: number };
+
+      if (!state.plans[year]) {
+        return state;
+      }
+      if (month < 0 || month > 11) {
+        return state;
+      }
+
+      const months = state.plans[year].months;
+      delete months[month];
+
+      return {
+        ...state,
+        plans: {
+          ...state.plans,
+          [year]: {
+            year,
+            months,
+          }
+        }
+      }
+    }
     default:
       return state;
   }

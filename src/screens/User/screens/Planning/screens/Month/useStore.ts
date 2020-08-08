@@ -1,16 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../../../store/store.types';
-import { PlanningState, Plan } from '../../../../../../store/planning/planning.types';
-// import { CategoriesState } from '../../../../../../store/categories/categories.types';
-
-export type CategoryPrognosis = {
-  id: string;
-  name: string;
-  prognosis: number;
-  actual: number;
-  difference: number;
-}
+import { PlanningState, PlanningMonth, CategoryPrognosis } from '../../../../../../store/planning/planning.types';
 
 export type Balance = {
   prognosis: number;
@@ -30,18 +21,19 @@ type Hook = {
 
 export const useStore = (year: string | undefined, month: string | undefined): Hook => {
   const yearKey = year ? parseInt(year) : NaN;
-  const monthKey = month || 'invalid';
+  const monthKey = month ? parseInt(month) : NaN;
 
   const planning = useSelector<RootState, PlanningState>(state => state.planning);
   // const categories = useSelector<RootState, CategoriesState>(state => state.categories);
   // const { income, expenses } = categories;
 
-  let monthPlan: Plan = {
+  let monthPlan: PlanningMonth = {
+    month: monthKey,
     income: [],
     expenses: [],
   };
 
-  const plan = planning.plans.find((plan) => plan.year === yearKey);
+  const plan = planning.plans[yearKey]
   if (plan) {
     monthPlan = plan.months[monthKey];
   }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, useHistory } from "react-router-dom";
+import isEmpty from 'lodash.isempty';
 import Button from '@material-ui/core/Button';
 
 import { PlanningYear } from '../../../../store/planning/planning.types';
@@ -28,8 +29,8 @@ export const Planning: React.FC = () => {
   const history = useHistory();
   const Store = useStore();
 
-  const handleCreatePlanningYearClick = React.useCallback(() => {
-    Store.handleCreatePlanningYear(new Date().getFullYear());
+  const handleCreateYearClick = React.useCallback(() => {
+    Store.handleCreateYear(new Date().getFullYear());
   }, [Store]);
 
   const getPlanningYearClickHandler = React.useCallback((year: number) => () => {
@@ -38,28 +39,29 @@ export const Planning: React.FC = () => {
 
   return (
     <>
-      <div className={classes.paper}>
-        {Store.plans.length === 0 && (
-          <>
-            <div>You don't have any plans!</div>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              // className={classes.button}
-              onClick={handleCreatePlanningYearClick}
-            >
-              Create
-          </Button>
-          </>
-        )}
-        {Store.plans.length > 0 && (
-          <div>{Store.plans.map(planningYear => {
-            const handler = getPlanningYearClickHandler(planningYear.year);
-            return renderYearButtons(planningYear, handler);
-          })}</div>
-        )}
-      </div>
+      <Route exact path="/planning">
+        <div className={classes.paper}>
+          {isEmpty(Store.plans) && (
+            <>
+              <div>You don't have any plans!</div>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                onClick={handleCreateYearClick}
+              >
+                Create
+              </Button>
+            </>
+          )}
+          {!isEmpty(Store.plans) && (
+            <div>{Object.values(Store.plans).map(planningYear => {
+              const handler = getPlanningYearClickHandler(planningYear.year);
+              return renderYearButtons(planningYear, handler);
+            })}</div>
+          )}
+        </div>
+      </Route>
       <Route exact path="/planning/year-:year">
         <Year />
       </Route>

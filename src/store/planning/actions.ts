@@ -1,25 +1,39 @@
 import { Action } from 'redux';
 
-import { CategoriesState } from '../categories/categories.types';
-
 export enum PlanningActions {
-  CreatePlanningYear = 'Planning/CreatePlanningYear',
+  CreateYear = 'Planning/CreateYear',
+  CreateMonth = 'Planning/CreateMonth',
+  RemoveMonth = 'Planning/RemoveMonth',
 }
 
 export type PlanningActionScheme = Action<PlanningActions> & {
   type: PlanningActions;
-  payload: {
-    year: string | number;
-    categoriesState: CategoriesState;
-  };
+  payload: number | { year: number, month: number };
 }
 
-export const createPlanningYear = (year: number, categoriesState: CategoriesState): PlanningActionScheme => {
+export const createYear = (year: number): PlanningActionScheme => {
   return {
-    type: PlanningActions.CreatePlanningYear,
+    type: PlanningActions.CreateYear,
+    payload: year,
+  };
+};
+
+export const createMonth = (year: number, month: number): PlanningActionScheme => {
+  return {
+    type: PlanningActions.CreateMonth,
     payload: {
       year,
-      categoriesState,
+      month,
+    },
+  };
+};
+
+export const removeMonth = (year: number, month: number): PlanningActionScheme => {
+  return {
+    type: PlanningActions.RemoveMonth,
+    payload: {
+      year,
+      month,
     },
   };
 };

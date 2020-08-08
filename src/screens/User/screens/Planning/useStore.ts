@@ -7,8 +7,9 @@ import { CategoriesState } from '../../../../store/categories/categories.types';
 import * as PlanningActions from '../../../../store/planning/actions';
 
 type Hook = {
-  plans: Array<PlanningYear>;
-  handleCreatePlanningYear: (year: number) => void;
+  plans: Record<number, PlanningYear>;
+  handleCreateYear: (year: number) => void;
+  handleCreateMonth: (year: number, month: number) => void;
 }
 
 export const useStore = (): Hook => {
@@ -16,12 +17,17 @@ export const useStore = (): Hook => {
   const planning = useSelector<RootState, PlanningState>(state => state.planning);
   const categories = useSelector<RootState, CategoriesState>(state => state.categories);
 
-  const handleCreatePlanningYear = React.useCallback((year: number) => {
-    dispatch(PlanningActions.createPlanningYear(year, categories));
-  }, [dispatch, categories]);
+  const handleCreateYear = React.useCallback((year: number) => {
+    dispatch(PlanningActions.createYear(year));
+  }, [dispatch]);
+
+  const handleCreateMonth = React.useCallback((year: number, month: number) => {
+    dispatch(PlanningActions.createMonth(year, month));
+  }, [dispatch]);
 
   return {
     plans: planning.plans,
-    handleCreatePlanningYear,
+    handleCreateYear,
+    handleCreateMonth,
   }
 }
