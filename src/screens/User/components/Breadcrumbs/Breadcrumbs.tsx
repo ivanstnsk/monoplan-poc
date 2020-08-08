@@ -20,7 +20,12 @@ const renderLink = (path: string, label: string, onClick: () => void, last = fal
 
   if (last) {
     return (
-      <Typography color="textPrimary">{finalLabel}</Typography>
+      <Typography
+        key={finalLabel}
+        color="textPrimary"
+      >
+        {finalLabel}
+      </Typography>
     );
   }
   return (
