@@ -57,8 +57,10 @@ const getRenderEditField = (
       labelId="select-month"
       id="select-month"
       value={props.value}
+      displayEmpty
       onChange={(e) => props.onChange(e.target.value)}
     >
+      <MenuItem disabled>Select month</MenuItem>
       {new Array(12).fill(0).map((_, i) => {
         const disabled = months
           ? !!months[i]

@@ -34,6 +34,21 @@ export const planningReducer: PlanningReducer = (
         }
       }
     }
+    case PlanningActions.RemoveYear: {
+      const year = payload as number;
+
+      if (!state.plans[year]) {
+        return state;
+      }
+
+      const plans = state.plans;
+      delete plans[year];
+
+      return {
+        ...state,
+        plans,
+      }
+    }
     case PlanningActions.CreateMonth: {
       const { year, month } = payload as { year: number, month: number };
 

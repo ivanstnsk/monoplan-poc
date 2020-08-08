@@ -2,6 +2,7 @@ import { Action } from 'redux';
 
 export enum PlanningActions {
   CreateYear = 'Planning/CreateYear',
+  RemoveYear = 'Planning/RemoveYear',
   CreateMonth = 'Planning/CreateMonth',
   RemoveMonth = 'Planning/RemoveMonth',
 }
@@ -14,6 +15,13 @@ export type PlanningActionScheme = Action<PlanningActions> & {
 export const createYear = (year: number): PlanningActionScheme => {
   return {
     type: PlanningActions.CreateYear,
+    payload: year,
+  };
+};
+
+export const removeYear = (year: number): PlanningActionScheme => {
+  return {
+    type: PlanningActions.RemoveYear,
     payload: year,
   };
 };
