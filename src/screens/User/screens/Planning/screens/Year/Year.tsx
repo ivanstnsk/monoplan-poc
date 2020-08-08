@@ -145,7 +145,7 @@ export const Year: React.FC = () => {
           </div>
         )}
         {!Store.invalid && (
-          <Grid xs={12} md={12}>
+          <Grid item xs={12} md={12}>
             <MaterialTable
               title={`Planning ${params.year} year`}
               columns={CATEGORIES_COLUMNS as any}
