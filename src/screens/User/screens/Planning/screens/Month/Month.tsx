@@ -52,28 +52,28 @@ const renderBalanceTable = (
         <div className={classes.cardDetails}>
           <CardContent>
             <Grid container>
-              <Grid xs={3} md={3}>
+              <Grid item xs={3} md={3}>
                 <Typography component="div" variant="body1">Prognosis</Typography>
               </Grid>
-              <Grid xs={3} md={3}>
+              <Grid item xs={3} md={3}>
                 <Typography component="div" variant="body1">
                   {balance.prognosis}
                 </Typography>
               </Grid>
-              <Grid xs={6} md={6}>
+              <Grid item xs={6} md={6}>
                 <ProgressBar color={color} progress={0} />
               </Grid>
             </Grid>
             <Grid container>
-              <Grid xs={3} md={3}>
+              <Grid item xs={3} md={3}>
                 <Typography component="div" variant="body1">Actual</Typography>
               </Grid>
-              <Grid xs={3} md={3}>
+              <Grid item xs={3} md={3}>
                 <Typography component="div" variant="body1">
                   {balance.actual}
                 </Typography>
               </Grid>
-              <Grid xs={6} md={6}>
+              <Grid item xs={6} md={6}>
                 <ProgressBar color={color} progress={59} />
               </Grid>
             </Grid>

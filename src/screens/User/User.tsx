@@ -40,7 +40,6 @@ export const User: React.FC = () => {
         <div className={classes.appBarSpacer} />
         <Breadcrumbs />
         <Container maxWidth="lg" className={classes.container}>
-          {/* <MonthSelect /> */}
           <Route path="/dashboard">
             <Dashboard />
           </Route>

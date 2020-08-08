@@ -126,14 +126,14 @@ export const Year: React.FC = () => {
     const { month } = data;
     Store.handleCreateMonth(year, month);
     return Promise.resolve();
-  }, []);
+  }, [Store, params.year]);
 
   const handleRemoveMonth = React.useCallback(async (data: any): Promise<void> => {
     const year = params.year ? parseInt(params.year) : NaN;
     const { month } = data;
     Store.handleRemoveMonth(year, month);
     return Promise.resolve();
-  }, []);
+  }, [Store, params.year]);
 
   return (
     <div className={classes.paper}>

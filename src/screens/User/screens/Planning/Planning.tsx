@@ -121,13 +121,13 @@ export const Planning: React.FC = () => {
     const { year } = data;
     Store.handleCreateYear(year);
     return Promise.resolve();
-  }, []);
+  }, [Store]);
 
   const handleRemoveYear = React.useCallback(async (data: any): Promise<void> => {
     const { year } = data;
     Store.handleRemoveYear(year);
     return Promise.resolve();
-  }, []);
+  }, [Store]);
 
   return (
     <>
