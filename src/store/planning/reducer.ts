@@ -1,6 +1,8 @@
 import { Reducer } from 'redux';
 
-import { PlanningState, PlanningYear, PlanningMonth } from './planning.types';
+import { CategoryType } from '../categories/categories.types';
+
+import { PlanningState, PlanningYear, PlanningMonth, PrognosisCategoryPayload } from './planning.types';
 import { PlanningActionScheme, PlanningActions } from './actions';
 
 type PlanningReducer = Reducer<PlanningState, PlanningActionScheme>;
@@ -61,8 +63,8 @@ export const planningReducer: PlanningReducer = (
 
       const newMonth: PlanningMonth = {
         month,
-        income: [],
-        expenses: [],
+        income: {},
+        expenses: {},
       };
 
       return {
@@ -99,6 +101,39 @@ export const planningReducer: PlanningReducer = (
           [year]: {
             year,
             months,
+          }
+        }
+      }
+    }
+    case PlanningActions.CreateCategoryPrognosis: {
+      const { year, month, group, id, prognosis } = payload as PrognosisCategoryPayload;
+
+      if (!state.plans[year]
+        || !state.plans[year].months[month]
+        || !state.plans[year].months[month][group]
+        || state.plans[year].months[month][group][id]) {
+        return state;
+      }
+
+      return {
+        ...state,
+        plans: {
+          ...state.plans,
+          [year]: {
+            year,
+            months: {
+              ...state.plans[year].months,
+              [month]: {
+                ...state.plans[year].months[month],
+                [group]: {
+                  ...state.plans[year].months[month][group],
+                  [id]: {
+                    id,
+                    prognosis,
+                  },
+                }
+              }
+            },
           }
         }
       }

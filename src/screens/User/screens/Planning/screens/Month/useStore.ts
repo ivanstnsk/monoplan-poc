@@ -1,99 +1,90 @@
-import { useSelector } from 'react-redux';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import isEmpty from 'lodash.isempty';
 
 import { RootState } from '../../../../../../store/store.types';
-import { PlanningState, PlanningMonth, CategoryPrognosis } from '../../../../../../store/planning/planning.types';
+import { CategoriesState, Category, CategoryType } from '../../../../../../store/categories/categories.types';
+import { PlanningState, PlanningCategory } from '../../../../../../store/planning/planning.types';
+import * as PlanningActions from '../../../../../../store/planning/actions';
 
-export type Balance = {
+export type CalculatedPlanningGroup = {
   prognosis: number;
-  actual: number;
+  categories: Record<string, PlanningCategory & { name: string }>;
+  all: Record<string, Category>;
 }
 
 type Hook = {
-  income: {
-    balance: Balance;
-    categories: Array<CategoryPrognosis>;
+  invalid: boolean;
+  income?: CalculatedPlanningGroup;
+  expenses?: CalculatedPlanningGroup;
+  handleAddCategoryPrognosis: (group: CategoryType, id: string, prognosis: number) => void;
+}
+
+const calculateCategories = (
+  planningCategories: Record<string, PlanningCategory>,
+  categories: Record<string, Category>,
+): CalculatedPlanningGroup => {
+  const res: CalculatedPlanningGroup = {
+    prognosis: 0,
+    categories: {},
+    all: categories,
+  };
+
+  if (!isEmpty(planningCategories)) {
+    Object.values(planningCategories).forEach(({ id, prognosis }) => {
+
+      const name = categories[id].name;
+
+      res.prognosis += Number.isInteger(prognosis) ? prognosis : parseInt(prognosis as any);
+      res.categories = Object.assign(res.categories, {
+        [id]: {
+          id,
+          prognosis,
+          name,
+        }
+      });
+    });
   }
-  expenses: {
-    balance: Balance;
-    categories: Array<CategoryPrognosis>;
-  }
+
+  return res;
 }
 
 export const useStore = (year: string | undefined, month: string | undefined): Hook => {
+  const dispatch = useDispatch();
+
   const yearKey = year ? parseInt(year) : NaN;
   const monthKey = month ? parseInt(month) : NaN;
 
   const planning = useSelector<RootState, PlanningState>(state => state.planning);
-  // const categories = useSelector<RootState, CategoriesState>(state => state.categories);
-  // const { income, expenses } = categories;
+  const categories = useSelector<RootState, CategoriesState>(state => state.categories);
 
-  let monthPlan: PlanningMonth = {
-    month: monthKey,
-    income: [],
-    expenses: [],
-  };
+  const handleAddCategoryPrognosis = React.useCallback((group: CategoryType, id: string, prognosis: number) => {
+    if (yearKey !== NaN && monthKey !== NaN) {
+      const data = {
+        year: yearKey,
+        month: monthKey,
+        group,
+        id,
+        prognosis,
+      };
+      dispatch(PlanningActions.createPrognosisCategory(data));
+    }
+  }, []);
 
-  const plan = planning.plans[yearKey]
-  if (plan) {
-    monthPlan = plan.months[monthKey];
+  if (!planning.plans[yearKey] || !planning.plans[yearKey].months[monthKey]) {
+    return {
+      invalid: true,
+      handleAddCategoryPrognosis,
+    }
   }
 
+  const monthPlan = planning.plans[yearKey].months[monthKey];
   const { income, expenses } = monthPlan;
 
-  // const incomePrognosis = income.map((category) => {
-  //   const prognosis = 100;
-  //   const actual = 50;
-  //   const difference = prognosis - actual;
-
-  //   return {
-  //     id: category.id,
-  //     name: category.name,
-  //     prognosis,
-  //     actual,
-  //     difference,
-  //   }
-  // });
-
-  // const expensesPrognosis = income.map((category) => {
-  //   const prognosis = 100;
-  //   const actual = 50;
-  //   const difference = prognosis - actual;
-
-  //   return {
-  //     id: category.id,
-  //     name: category.name,
-  //     prognosis,
-  //     actual,
-  //     difference,
-  //   }
-  // });
-
-  const incomeBalance = {
-    prognosis: income.reduce((acc, category) => {
-      return acc += category.prognosis;
-    }, 0),
-    actual: income.reduce((acc, category) => {
-      return acc += category.actual;
-    }, 0),
-  }
-
-  const expensesBalance = {
-    prognosis: expenses.reduce((acc, category) => {
-      return acc += category.prognosis;
-    }, 0),
-    actual: expenses.reduce((acc, category) => {
-      return acc += category.actual;
-    }, 0),
-  }
-
   return {
-    income: {
-      balance: incomeBalance,
-      categories: income
-    },
-    expenses: {
-      balance: expensesBalance,
-      categories: expenses
-    }
+    invalid: false,
+    income: calculateCategories(income, categories.income),
+    expenses: calculateCategories(expenses, categories.expenses),
+    handleAddCategoryPrognosis,
   }
 }

@@ -26,6 +26,17 @@ const CATEGORIES_COLUMNS = [
   { title: 'balance', field: 'balance' },
 ];
 
+const tableIcons = {
+  Add: React.forwardRef((props: any, ref) => <AddBox {...props} ref={ref} />),
+  Check: React.forwardRef((props: any, ref) => <Check {...props} ref={ref} />),
+  Clear: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
+  Delete: React.forwardRef((props: any, ref) => <DeleteOutline {...props} ref={ref} />),
+  Edit: React.forwardRef((props: any, ref) => <Edit {...props} ref={ref} />),
+  ResetSearch: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
+  Search: React.forwardRef((props: any, ref) => <Search {...props} ref={ref} />),
+  SortArrow: React.forwardRef((props: any, ref) => <ArrowDownward {...props} ref={ref} />),
+};
+
 const getRenderEditField = (
   classes: any,
   plans: Record<number, PlanningYear>
@@ -96,17 +107,6 @@ const getRenderCell = (classes: any, getYearOpenHandler: (year: number) => any) 
     <MTableCell {...props} />
   );
 }
-
-const tableIcons = {
-  Add: React.forwardRef((props: any, ref) => <AddBox {...props} ref={ref} />),
-  Check: React.forwardRef((props: any, ref) => <Check {...props} ref={ref} />),
-  Clear: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
-  Delete: React.forwardRef((props: any, ref) => <DeleteOutline {...props} ref={ref} />),
-  Edit: React.forwardRef((props: any, ref) => <Edit {...props} ref={ref} />),
-  ResetSearch: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
-  Search: React.forwardRef((props: any, ref) => <Search {...props} ref={ref} />),
-  SortArrow: React.forwardRef((props: any, ref) => <ArrowDownward {...props} ref={ref} />),
-};
 
 export const Planning: React.FC = () => {
   const classes = useStyles();
