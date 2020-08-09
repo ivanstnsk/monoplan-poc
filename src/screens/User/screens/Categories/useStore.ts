@@ -5,8 +5,8 @@ import { CategoriesState, Category, CategoryType } from '../../../../store/categ
 import * as CategoriesActions from '../../../../store/categories/actions';
 
 type Hook = {
-  income: Array<Category>;
-  expenses: Array<Category>;
+  income: Record<string, Category>;
+  expenses: Record<string, Category>;
   onAddCategory: (categoryType: CategoryType, name: string) => void;
   onUpdateCategory: (type: CategoryType, id: string, name: string) => void;
   onDeleteCategory: (type: CategoryType, id: string) => void;

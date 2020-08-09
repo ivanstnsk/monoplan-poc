@@ -9,6 +9,6 @@ export type Category = {
 };
 
 export type CategoriesState = {
-  income: Array<Category>;
-  expenses: Array<Category>;
+  income: Record<string, Category>;
+  expenses: Record<string, Category>;
 }

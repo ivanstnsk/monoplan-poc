@@ -30,7 +30,7 @@ const tableIcons = {
 };
 
 const renderTable = (
-  categories: Array<Category>,
+  categoriesGroup: Record<string, Category>,
   title: string,
   onRowAdd: (newData: any) => Promise<void>,
   onRowUpdate: (newData: any, oldData: any) => Promise<void>,
@@ -40,7 +40,7 @@ const renderTable = (
       <MaterialTable
         title={title}
         columns={COLUMNS}
-        data={categories}
+        data={Object.values(categoriesGroup)}
         editable={{
           onRowAdd,
           onRowUpdate,
@@ -50,17 +50,6 @@ const renderTable = (
         options={{
           paging: false,
           search: false,
-        }}
-        localization={{
-          header: {
-            actions: '',
-          },
-          body: {
-            editRow: {
-              deleteText: 'Видалити цю категорію?',
-            },
-            deleteTooltip: 'Видалити'
-          }
         }}
       />
     </Grid>
