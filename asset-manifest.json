@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/monoplan-poc/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/monoplan-poc/static/js/main.de16331d.chunk.js",
-    "main.js.map": "/monoplan-poc/static/js/main.de16331d.chunk.js.map",
+    "main.js": "/monoplan-poc/static/js/main.644aacf7.chunk.js",
+    "main.js.map": "/monoplan-poc/static/js/main.644aacf7.chunk.js.map",
     "runtime-main.js": "/monoplan-poc/static/js/runtime-main.3e466d19.js",
     "runtime-main.js.map": "/monoplan-poc/static/js/runtime-main.3e466d19.js.map",
-    "static/js/2.177e8d66.chunk.js": "/monoplan-poc/static/js/2.177e8d66.chunk.js",
-    "static/js/2.177e8d66.chunk.js.map": "/monoplan-poc/static/js/2.177e8d66.chunk.js.map",
+    "static/js/2.6f17bd90.chunk.js": "/monoplan-poc/static/js/2.6f17bd90.chunk.js",
+    "static/js/2.6f17bd90.chunk.js.map": "/monoplan-poc/static/js/2.6f17bd90.chunk.js.map",
     "index.html": "/monoplan-poc/index.html",
-    "precache-manifest.751a9c02e1d58faf9071d975c3afd44e.js": "/monoplan-poc/precache-manifest.751a9c02e1d58faf9071d975c3afd44e.js",
+    "precache-manifest.ef6e49a812b1625d886d089a51219ce7.js": "/monoplan-poc/precache-manifest.ef6e49a812b1625d886d089a51219ce7.js",
     "service-worker.js": "/monoplan-poc/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/monoplan-poc/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.177e8d66.chunk.js.LICENSE.txt": "/monoplan-poc/static/js/2.177e8d66.chunk.js.LICENSE.txt"
+    "static/js/2.6f17bd90.chunk.js.LICENSE.txt": "/monoplan-poc/static/js/2.6f17bd90.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3e466d19.js",
-    "static/js/2.177e8d66.chunk.js",
+    "static/js/2.6f17bd90.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.de16331d.chunk.js"
+    "static/js/main.644aacf7.chunk.js"
   ]
 }
