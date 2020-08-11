@@ -18,5 +18,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   tableWrapper: {
     marginTop: 24,
-  }
+  },
+  categoryCell: {
+    height: '100%',
+    borderBottom: '1px solid rgba(224, 224, 224, 1)',
+  },
 }));

@@ -134,7 +134,7 @@ const getRenderCell = (
   const name = categories[props.value] ? categories[props.value].name : 'invalid';
 
   return (
-    <td>{name}</td>
+    <td className={classes.categoryCell}>{name}</td>
   );
 }
 
@@ -160,7 +160,6 @@ const getRenderEditField = (
     >
       <MenuItem disabled>Select category</MenuItem>
       {Object.values(categories).map((category) => {
-        console.log('check', categories, props)
         const disabled = !!calculatedCategories[category.id];
 
         return (
@@ -181,7 +180,8 @@ const renderPrognosisTable = (
   classes: any,
   calculatedGroup: CalculatedPlanningGroup | undefined,
   onRowAdd: (data: any) => any,
-  onRowUpdate: (data: any) => any,
+  onRowUpdate: (data: any, oldData: any) => any,
+  onRowDelete: (data: any) => any,
 ): JSX.Element | null => {
 
   if (!calculatedGroup) {
@@ -196,6 +196,7 @@ const renderPrognosisTable = (
       editable={{
         onRowAdd,
         onRowUpdate,
+        onRowDelete,
       }}
       icons={tableIcons as any}
       options={{
@@ -216,23 +217,22 @@ export const Month: React.FC = () => {
   const params = useParams<RouteParams>();
   const Store = useStore(params.year, params.month);
 
-  console.log('Store', Store);
-
-  const getRowUpdateHandler = React.useCallback((categoryType: CategoryType) => {
-    return async (data: any, oldData: any): Promise<void> => {
-      console.log(data);
-      // Store.onUpdateCategory(categoryType, data.id, data.name)
-      return Promise.resolve();
-    }
-  }, []);
-
   const getAddPrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any) => {
     const { id, prognosis } = data;
     Store.handleAddCategoryPrognosis(group, id, prognosis);
     return Promise.resolve();
   }, []);
 
-  const getUpdatePrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any) => {
+  const getRemovePrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any) => {
+    const { id } = data;
+    Store.handleRemoveCategoryPrognosis(group, id);
+    return Promise.resolve();
+  }, []);
+
+  const getUpdatePrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any, oldData: any) => {
+    const { id } = oldData;
+    const { id: newId, prognosis } = data;
+    Store.handleUpdateCategoryPrognosis(group, id, newId, prognosis);
     return Promise.resolve();
   }, []);
 
@@ -272,6 +272,7 @@ export const Month: React.FC = () => {
               Store.expenses,
               getAddPrognosisHandler('expenses'),
               getUpdatePrognosisHandler('expenses'),
+              getRemovePrognosisHandler('expenses'),
             )}
           </Grid>
           <Grid item xs={6} md={6}>
@@ -280,6 +281,7 @@ export const Month: React.FC = () => {
               Store.income,
               getAddPrognosisHandler('income'),
               getUpdatePrognosisHandler('income'),
+              getRemovePrognosisHandler('income'),
             )}
           </Grid>
         </Grid>

@@ -18,6 +18,8 @@ type Hook = {
   income?: CalculatedPlanningGroup;
   expenses?: CalculatedPlanningGroup;
   handleAddCategoryPrognosis: (group: CategoryType, id: string, prognosis: number) => void;
+  handleRemoveCategoryPrognosis: (group: CategoryType, id: string) => void;
+  handleUpdateCategoryPrognosis: (group: CategoryType, id: string, newId: string, prognosis: number) => void;
 }
 
 const calculateCategories = (
@@ -71,10 +73,38 @@ export const useStore = (year: string | undefined, month: string | undefined): H
     }
   }, []);
 
+  const handleRemoveCategoryPrognosis = React.useCallback((group: CategoryType, id: string) => {
+    if (yearKey !== NaN && monthKey !== NaN) {
+      const data = {
+        year: yearKey,
+        month: monthKey,
+        group,
+        id,
+      };
+      dispatch(PlanningActions.removePrognosisCategory(data))
+    }
+  }, []);
+
+  const handleUpdateCategoryPrognosis = React.useCallback((group: CategoryType, id: string, newId: string, prognosis) => {
+    if (yearKey !== NaN && monthKey !== NaN) {
+      const data = {
+        year: yearKey,
+        month: monthKey,
+        group,
+        id,
+        newId,
+        prognosis,
+      };
+      dispatch(PlanningActions.updatePrognosisCategory(data))
+    }
+  }, []);
+
   if (!planning.plans[yearKey] || !planning.plans[yearKey].months[monthKey]) {
     return {
       invalid: true,
       handleAddCategoryPrognosis,
+      handleRemoveCategoryPrognosis,
+      handleUpdateCategoryPrognosis,
     }
   }
 
@@ -86,5 +116,7 @@ export const useStore = (year: string | undefined, month: string | undefined): H
     income: calculateCategories(income, categories.income),
     expenses: calculateCategories(expenses, categories.expenses),
     handleAddCategoryPrognosis,
+    handleRemoveCategoryPrognosis,
+    handleUpdateCategoryPrognosis,
   }
 }

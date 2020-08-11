@@ -138,6 +138,76 @@ export const planningReducer: PlanningReducer = (
         }
       }
     }
+    case PlanningActions.RemoveCategoryPrognosis: {
+      const { year, month, group, id } = payload as Omit<PrognosisCategoryPayload, 'prognosis'>;
+
+      if (!state.plans[year]
+        || !state.plans[year].months[month]
+        || !state.plans[year].months[month][group]
+        || !state.plans[year].months[month][group][id]) {
+        return state;
+      }
+
+      const categories = state.plans[year].months[month][group];
+      delete categories[id];
+
+      return {
+        ...state,
+        plans: {
+          ...state.plans,
+          [year]: {
+            year,
+            months: {
+              ...state.plans[year].months,
+              [month]: {
+                ...state.plans[year].months[month],
+                [group]: categories,
+              }
+            }
+          }
+        }
+      }
+    }
+    case PlanningActions.UpdateCategoryPrognosis: {
+      const { year, month, group, id, prognosis, newId } = payload as PrognosisCategoryPayload & { newId: string };
+
+      if (!state.plans[year]
+        || !state.plans[year].months[month]
+        || !state.plans[year].months[month][group]
+        || !state.plans[year].months[month][group][id]) {
+        console.log('no data', state.plans[year].months[month][group], id, newId)
+        return state;
+      }
+
+      const categories = state.plans[year].months[month][group];
+
+      if (id !== newId) {
+        categories[newId] = {
+          id: newId,
+          prognosis,
+        };
+        delete categories[id];
+      } else {
+        categories[id].prognosis = prognosis;
+      }
+
+      return {
+        ...state,
+        plans: {
+          ...state.plans,
+          [year]: {
+            year,
+            months: {
+              ...state.plans[year].months,
+              [month]: {
+                ...state.plans[year].months[month],
+                [group]: categories,
+              }
+            }
+          }
+        }
+      }
+    }
     default:
       return state;
   }
