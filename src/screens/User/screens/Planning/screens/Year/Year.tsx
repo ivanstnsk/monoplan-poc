@@ -18,7 +18,7 @@ import Search from '@material-ui/icons/Search';
 import { PlanningMonth } from '../../../../../../store/planning/planning.types';
 import { getMonthNameByIndex } from '../../../../../../utils';
 
-import { useStore } from './useStore';
+import { useStore, MonthTableRecord } from './useStore';
 import { useStyles } from './styles';
 
 type RouteParams = {
@@ -27,7 +27,9 @@ type RouteParams = {
 
 const CATEGORIES_COLUMNS = [
   { title: 'month', field: 'month' },
-  { title: 'balance', field: 'balance' },
+  { title: 'expenses', field: 'expenses', editable: 'never' },
+  { title: 'income', field: 'income', editable: 'never' },
+  { title: 'categories', field: 'categoriesCount' },
 ];
 
 const tableIcons = {
@@ -43,7 +45,7 @@ const tableIcons = {
 
 const getRenderEditField = (
   classes: any,
-  months?: Record<number, PlanningMonth>
+  months?: Array<MonthTableRecord>,
 ) => (props: any): JSX.Element => {
   if (props.columnDef.field !== 'month') {
     return (
@@ -151,7 +153,7 @@ export const Year: React.FC = () => {
             <MaterialTable
               title={`Planning ${params.year} year`}
               columns={CATEGORIES_COLUMNS as any}
-              data={Object.values(Store.months)}
+              data={Store.months}
               icons={tableIcons as any}
               editable={{
                 onRowAdd: handleAddMonth,
@@ -164,7 +166,7 @@ export const Year: React.FC = () => {
               components={{
                 EditField: getRenderEditField(classes, Store.months),
                 Cell: getRenderCell(classes, getMonthOpenHandler),
-                Header: () => null,
+                // Header: () => null,
               }}
             />
           </Grid>

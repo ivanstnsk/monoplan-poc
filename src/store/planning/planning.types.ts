@@ -5,8 +5,14 @@ export type PlanningCategory = {
   prognosis: number;
 }
 
+export type Balance = {
+  income: number;
+  expenses: number;
+}
+
 export type PlanningMonth = {
   month: number;
+  balance: Balance;
   income: Record<string, PlanningCategory>;
   expenses: Record<string, PlanningCategory>;
 }

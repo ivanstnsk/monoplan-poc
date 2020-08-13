@@ -63,6 +63,10 @@ export const planningReducer: PlanningReducer = (
 
       const newMonth: PlanningMonth = {
         month,
+        balance: {
+          income: 0,
+          expenses: 0,
+        },
         income: {},
         expenses: {},
       };
@@ -125,6 +129,10 @@ export const planningReducer: PlanningReducer = (
               ...state.plans[year].months,
               [month]: {
                 ...state.plans[year].months[month],
+                balance: {
+                  ...state.plans[year].months[month].balance,
+                  [group]: state.plans[year].months[month].balance[group] + prognosis,
+                },
                 [group]: {
                   ...state.plans[year].months[month][group],
                   [id]: {
@@ -149,6 +157,7 @@ export const planningReducer: PlanningReducer = (
       }
 
       const categories = state.plans[year].months[month][group];
+      const { prognosis } = categories[id];
       delete categories[id];
 
       return {
@@ -161,6 +170,10 @@ export const planningReducer: PlanningReducer = (
               ...state.plans[year].months,
               [month]: {
                 ...state.plans[year].months[month],
+                balance: {
+                  ...state.plans[year].months[month].balance,
+                  [group]: state.plans[year].months[month].balance[group] - prognosis,
+                },
                 [group]: categories,
               }
             }
@@ -175,11 +188,11 @@ export const planningReducer: PlanningReducer = (
         || !state.plans[year].months[month]
         || !state.plans[year].months[month][group]
         || !state.plans[year].months[month][group][id]) {
-        console.log('no data', state.plans[year].months[month][group], id, newId)
         return state;
       }
 
       const categories = state.plans[year].months[month][group];
+      const { prognosis: oldPrognosis } = state.plans[year].months[month][group][id];
 
       if (id !== newId) {
         categories[newId] = {
@@ -201,6 +214,10 @@ export const planningReducer: PlanningReducer = (
               ...state.plans[year].months,
               [month]: {
                 ...state.plans[year].months[month],
+                balance: {
+                  ...state.plans[year].months[month].balance,
+                  [group]: state.plans[year].months[month].balance[group] - oldPrognosis + prognosis,
+                },
                 [group]: categories,
               }
             }

@@ -23,4 +23,10 @@ export const useStyles = makeStyles((theme) => ({
     height: '100%',
     borderBottom: '1px solid rgba(224, 224, 224, 1)',
   },
+  balanceCard: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 24,
+    paddingRight: 24,
+  }
 }));

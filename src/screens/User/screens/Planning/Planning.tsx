@@ -18,12 +18,14 @@ import Search from '@material-ui/icons/Search';
 import { PlanningYear } from '../../../../store/planning/planning.types';
 
 import { Year, Month } from './screens';
-import { useStore } from './useStore';
+import { useStore, YearTableRecord } from './useStore';
 import { useStyles } from './styles';
 
 const CATEGORIES_COLUMNS = [
   { title: 'year', field: 'year' },
-  { title: 'balance', field: 'balance' },
+  { title: 'income', field: 'income' },
+  { title: 'expenses', field: 'expenses' },
+  { title: 'months', field: 'monthsCount' },
 ];
 
 const tableIcons = {
@@ -39,7 +41,7 @@ const tableIcons = {
 
 const getRenderEditField = (
   classes: any,
-  plans: Record<number, PlanningYear>
+  plans: Array<YearTableRecord>,
 ) => (props: any): JSX.Element => {
   if (props.columnDef.field !== 'year') {
     return (
@@ -143,7 +145,7 @@ export const Planning: React.FC = () => {
               <MaterialTable
                 title='Planning years'
                 columns={CATEGORIES_COLUMNS as any}
-                data={Object.values(Store.plans)}
+                data={Store.plans}
                 icons={tableIcons as any}
                 editable={{
                   onRowAdd: handleAddYear,
@@ -156,7 +158,7 @@ export const Planning: React.FC = () => {
                 components={{
                   EditField: getRenderEditField(classes, Store.plans),
                   Cell: getRenderCell(classes, getYearOpenHandler),
-                  Header: () => null,
+                  // Header: () => null,
                 }}
               />
             </Grid>

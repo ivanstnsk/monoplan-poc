@@ -6,13 +6,29 @@ import * as PlanningActions from '../../../../../../store/planning/actions';
 import { RootState } from '../../../../../../store/store.types';
 import { PlanningState, PlanningMonth } from '../../../../../../store/planning/planning.types';
 
+export type MonthTableRecord = {
+  month: number;
+  income: number;
+  expenses: number;
+  categoriesCount: number;
+}
+
 type Hook = {
   year?: number;
-  months: Record<number, PlanningMonth>;
+  months: Array<MonthTableRecord>;
   empty: boolean;
   invalid: boolean;
   handleCreateMonth: (year: number, month: number) => void;
   handleRemoveMonth: (year: number, month: number) => void;
+}
+
+const prepareTableRecords = (months: Record<number, PlanningMonth>): Array<MonthTableRecord> => {
+  return Object.values(months).map(({ month, balance, income, expenses }) => ({
+    month,
+    income: balance.income,
+    expenses: balance.expenses,
+    categoriesCount: Object.values(income).length + Object.values(expenses).length,
+  }));
 }
 
 export const useStore = (year: string | undefined): Hook => {
@@ -34,7 +50,7 @@ export const useStore = (year: string | undefined): Hook => {
     return {
       empty: true,
       invalid: true,
-      months: {},
+      months: [],
       handleCreateMonth,
       handleRemoveMonth,
     }
@@ -42,7 +58,7 @@ export const useStore = (year: string | undefined): Hook => {
 
   return {
     year: yearKey,
-    months: planningYear.months,
+    months: prepareTableRecords(planningYear.months),
     empty: isEmpty(planningYear.months),
     invalid: false,
     handleCreateMonth,

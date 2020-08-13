@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Card from '@material-ui/core/Card';
 
 import MaterialTable, { MTableEditField, MTableCell } from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
@@ -43,84 +44,6 @@ const tableIcons = {
   Search: React.forwardRef((props: any, ref) => <Search {...props} ref={ref} />),
   SortArrow: React.forwardRef((props: any, ref) => <ArrowDownward {...props} ref={ref} />),
 };
-
-// const renderBalanceTable = (
-//   title: string,
-//   balance: Balance,
-//   classes: any,
-//   color: string,
-// ): JSX.Element => (
-//     <Grid item xs={12} md={6}>
-//       <Typography component="h2" variant="h5">
-//         {title}
-//       </Typography>
-//       <Card className={classes.card}>
-//         <div className={classes.cardDetails}>
-//           <CardContent>
-//             <Grid container>
-//               <Grid item xs={3} md={3}>
-//                 <Typography component="div" variant="body1">Prognosis</Typography>
-//               </Grid>
-//               <Grid item xs={3} md={3}>
-//                 <Typography component="div" variant="body1">
-//                   {balance.prognosis}
-//                 </Typography>
-//               </Grid>
-//               <Grid item xs={6} md={6}>
-//                 <ProgressBar color={color} progress={0} />
-//               </Grid>
-//             </Grid>
-//             <Grid container>
-//               <Grid item xs={3} md={3}>
-//                 <Typography component="div" variant="body1">Actual</Typography>
-//               </Grid>
-//               <Grid item xs={3} md={3}>
-//                 <Typography component="div" variant="body1">
-//                   {balance.actual}
-//                 </Typography>
-//               </Grid>
-//               <Grid item xs={6} md={6}>
-//                 <ProgressBar color={color} progress={59} />
-//               </Grid>
-//             </Grid>
-//           </CardContent>
-//         </div>
-//       </Card>
-//     </Grid>
-//   );
-
-// const renderCategoriesTable2 = (
-//   categories: Array<CategoryPrognosis>,
-//   title: string,
-//   onRowUpdate: (newData: any, oldData: any) => Promise<void>,
-// ): JSX.Element => (
-//     <Grid item xs={12} md={6}>
-//       <MaterialTable
-//         title={title}
-//         columns={CATEGORIES_COLUMNS as any}
-//         data={categories}
-//         editable={{
-//           onRowUpdate,
-//         }}
-//         icons={tableIcons as any}
-//         options={{
-//           paging: false,
-//           search: false,
-//         }}
-//         localization={{
-//           header: {
-//             actions: '',
-//           },
-//           body: {
-//             editRow: {
-//               deleteText: 'Видалити цю категорію?',
-//             },
-//             deleteTooltip: 'Видалити'
-//           }
-//         }}
-//       />
-//     </Grid>
-//   );
 
 const getRenderCell = (
   classes: any,
@@ -212,6 +135,17 @@ const renderPrognosisTable = (
   );
 }
 
+const renderBalanceCard = (classes: any, type: 'income' | 'expenses', balance: number): JSX.Element => {
+  const label = type === 'income'
+    ? 'Income'
+    : 'Expenses';
+  return (
+    <Card variant="outlined" className={classes.balanceCard}>
+      <Typography variant="h5">{`${label} ${balance}`}</Typography>
+    </Card>
+  );
+}
+
 export const Month: React.FC = () => {
   const classes = useStyles();
   const params = useParams<RouteParams>();
@@ -219,7 +153,7 @@ export const Month: React.FC = () => {
 
   const getAddPrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any) => {
     const { id, prognosis } = data;
-    Store.handleAddCategoryPrognosis(group, id, prognosis);
+    Store.handleAddCategoryPrognosis(group, id, parseInt(prognosis));
     return Promise.resolve();
   }, []);
 
@@ -232,7 +166,7 @@ export const Month: React.FC = () => {
   const getUpdatePrognosisHandler = React.useCallback((group: 'income' | 'expenses') => (data: any, oldData: any) => {
     const { id } = oldData;
     const { id: newId, prognosis } = data;
-    Store.handleUpdateCategoryPrognosis(group, id, newId, prognosis);
+    Store.handleUpdateCategoryPrognosis(group, id, newId, parseInt(prognosis));
     return Promise.resolve();
   }, []);
 
@@ -248,20 +182,20 @@ export const Month: React.FC = () => {
         )}
         {!Store.invalid && (
           <Grid container spacing={4}>
-            <Grid item>Income {Store.income?.prognosis}</Grid>
-            <Grid item>Expenses {Store.expenses?.prognosis}</Grid>
-            {/* {renderBalanceTable(
-            'Expenses',
-            Store.expenses.balance,
-            classes,
-            '#9E3D3D',
-          )}
-          {renderBalanceTable(
-            'Income',
-            Store.income.balance,
-            classes,
-            '#539E3D',
-          )} */}
+            <Grid item xs={6} md={6}>
+              {renderBalanceCard(
+                classes,
+                'expenses',
+                Store.expenses?.prognosis || 0)
+              }
+            </Grid>
+            <Grid item xs={6} md={6}>
+              {renderBalanceCard(
+                classes,
+                'income',
+                Store.income?.prognosis || 0)
+              }
+            </Grid>
           </Grid>
         )}
 

@@ -85,7 +85,7 @@ export const useStore = (year: string | undefined, month: string | undefined): H
     }
   }, []);
 
-  const handleUpdateCategoryPrognosis = React.useCallback((group: CategoryType, id: string, newId: string, prognosis) => {
+  const handleUpdateCategoryPrognosis = React.useCallback((group: CategoryType, id: string, newId: string, prognosis: number) => {
     if (yearKey !== NaN && monthKey !== NaN) {
       const data = {
         year: yearKey,
@@ -109,6 +109,7 @@ export const useStore = (year: string | undefined, month: string | undefined): H
   }
 
   const monthPlan = planning.plans[yearKey].months[monthKey];
+  console.log(monthPlan)
   const { income, expenses } = monthPlan;
 
   return {

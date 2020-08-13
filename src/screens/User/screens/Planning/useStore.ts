@@ -7,11 +7,27 @@ import { PlanningState, PlanningYear } from '../../../../store/planning/planning
 // import { CategoriesState } from '../../../../store/categories/categories.types';
 import * as PlanningActions from '../../../../store/planning/actions';
 
+export type YearTableRecord = {
+  year: number;
+  income: number;
+  expenses: number;
+  monthsCount: number;
+}
+
 type Hook = {
-  plans: Record<number, PlanningYear>;
+  plans: Array<YearTableRecord>;
   empty: boolean;
   handleCreateYear: (year: number) => void;
   handleRemoveYear: (year: number) => void;
+}
+
+const prepareTableRecords = (plans: Record<number, PlanningYear>): Array<YearTableRecord> => {
+  return Object.values(plans).map(({ year, months }) => ({
+    year,
+    income: Object.values(months).reduce((value, m) => m.balance.income + value, 0),
+    expenses: Object.values(months).reduce((value, m) => m.balance.expenses + value, 0),
+    monthsCount: Object.values(months).length,
+  }))
 }
 
 export const useStore = (): Hook => {
@@ -28,7 +44,7 @@ export const useStore = (): Hook => {
   }, [dispatch]);
 
   return {
-    plans: planning.plans,
+    plans: prepareTableRecords(planning.plans),
     empty: isEmpty(planning.plans),
     handleCreateYear,
     handleRemoveYear,
