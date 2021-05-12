@@ -1,25 +1,21 @@
 import { Action } from 'redux';
 
 export enum UserActions {
-  SetName = 'User/SetName',
-  SetMonth = 'User/SetMonth',
+  SetUsername = 'User/SetUsername',
 }
 
 export type UserActionScheme = Action<UserActions> & {
   type: UserActions;
-  payload: string | number;
+  payload: {
+    username: string;
+  }
 }
 
-export const setName = (name: string): UserActionScheme => {
+export const setUsername = (username: string): UserActionScheme => {
   return {
-    type: UserActions.SetName,
-    payload: name,
-  };
-};
-
-export const setMonth = (month: number): UserActionScheme => {
-  return {
-    type: UserActions.SetMonth,
-    payload: month,
+    type: UserActions.SetUsername,
+    payload: {
+      username,
+    },
   };
 };

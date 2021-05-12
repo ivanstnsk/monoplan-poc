@@ -11,11 +11,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles } from './styles';
-import { useLogin } from './hooks';
+import { useSignup } from './hooks';
 
-export const Login: React.FC = () => {
+export const Signup: React.FC = () => {
   const classes = useStyles();
-  const Login = useLogin();
+  const { values, changeFieldValue, signup } = useSignup();
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -27,7 +27,7 @@ export const Login: React.FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -40,8 +40,8 @@ export const Login: React.FC = () => {
               name="username"
               autoComplete="username"
               autoFocus
-              value={Login.values.username}
-              onChange={Login.changeFieldValue as any}
+              value={values.username}
+              onChange={changeFieldValue as any}
             />
             <TextField
               variant="outlined"
@@ -53,8 +53,20 @@ export const Login: React.FC = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={Login.values.password}
-              onChange={Login.changeFieldValue as any}
+              value={values.password}
+              onChange={changeFieldValue as any}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password2"
+              label="Repeat password"
+              type="password"
+              id="password2"
+              value={values.password2}
+              onChange={changeFieldValue as any}
             />
             <Button
               type="submit"
@@ -62,16 +74,16 @@ export const Login: React.FC = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={Login.login}
+              onClick={signup}
             >
-              Login
+              Sign up
             </Button>
             <Grid container>
               <Grid item xs>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/login" variant="body2">
+                  {"Already hanve an account? Login"}
                 </Link>
               </Grid>
             </Grid>

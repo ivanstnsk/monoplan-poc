@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../store/store.types';
-import { UserState } from '../../../../store/user/user.types';
+import { UserState } from '../../../../store/user/types';
 import { StatementState } from '../../../../store/statement/statement.types';
 
 type StatementGroupedByDay = {
@@ -20,7 +20,7 @@ export const useStore = (): Hook => {
 
   const dates = new Map<string, StatementGroupedByDay>();
 
-  const maxDays = new Date(2020, user.month, 0).getDate();
+  const maxDays = new Date(2020, 0, 0).getDate();
   for (let i = 0; i < maxDays; i += 1) {
     const day = `${i}`;
     dates.set(day, {

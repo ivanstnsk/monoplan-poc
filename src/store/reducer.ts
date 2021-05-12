@@ -9,6 +9,7 @@ import { userReducer } from './user/reducer';
 import { statementReducer } from './statement/reducer';
 import { planningReducer } from './planning/reducer';
 import { categoriesReducer } from './categories/reducer';
+import { globalReducer } from './global/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -31,4 +32,5 @@ export const reducer = combineReducers<RootState>({
   statement: statementReducer,
   planning: persistReducer(planningPersistConfig, planningReducer) as any,
   categories: persistReducer(categoriesPersistConfig, categoriesReducer) as any,
+  global: globalReducer,
 });

@@ -1,13 +1,12 @@
 import { Reducer } from 'redux';
 
-import { UserState } from './user.types';
+import { UserState } from './types';
 import { UserActionScheme, UserActions } from './actions';
 
 type UserReducer = Reducer<UserState, UserActionScheme>;
 
 const initState: UserState = {
-  name: '',
-  month: 0,
+  username: '',
 };
 
 export const userReducer: UserReducer = (
@@ -15,15 +14,11 @@ export const userReducer: UserReducer = (
   { type, payload },
 ) => {
   switch (type) {
-    case UserActions.SetName:
+    case UserActions.SetUsername:
+      const { username } = payload as { username: string };
       return {
         ...state,
-        name: payload as string,
-      }
-    case UserActions.SetMonth:
-      return {
-        ...state,
-        month: payload as number,
+        username,
       }
     default:
       return state;

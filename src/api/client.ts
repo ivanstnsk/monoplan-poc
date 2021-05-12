@@ -1,21 +1,9 @@
-type Method = 'get';
+import axios from 'axios';
 
-const req = (method: Method, url: string) => {
-  const authData = localStorage.getItem('persist:auth');
-  const headers = new Headers();
-  const fullUrl = `https://api.monobank.ua/${url}`;
+const API_URL = 'http://localhost:3001';
 
-  if (authData) {
-    const { token } = JSON.parse(authData);
-    if (token) {
-      headers.append('X-Token', token.substring(1, token.length - 1));
-    }
-  }
+export const client = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+});
 
-  return fetch(fullUrl, {
-    method,
-    headers,
-  })
-}
-
-export const get = (url: string) => req('get', url);

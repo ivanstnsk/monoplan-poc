@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../store/store.types';
-import { AuthState } from '../store/auth/auth.types';
+import { GlobalState } from '../store/global/types';
 
-type Hook = boolean;
+type Hook = AuthState;
 
 export const useAuth = (): Hook => {
-  const { token } = useSelector<RootState, AuthState>(state => state.auth);
+  const { authState } = useSelector<RootState, GlobalState>(state => state.global);
 
-  return !!token;
+  return authState;
 }

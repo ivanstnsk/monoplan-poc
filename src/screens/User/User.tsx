@@ -5,12 +5,12 @@ import Container from '@material-ui/core/Container';
 
 import { SideMenu, Header, Breadcrumbs } from './components';
 import { Dashboard, Planning, Categories } from './screens';
-import { useStore } from './useStore';
 import { useStyles } from './styles';
+import { useUser } from './hooks';
 
 export const User: React.FC = () => {
   const classes = useStyles();
-  const Store = useStore();
+  const UserHelper = useUser();
 
   const [drawerOpen, setDrawerOpen] = React.useState(true);
 
@@ -19,9 +19,9 @@ export const User: React.FC = () => {
     setDrawerOpen(!drawerOpen);
   }, [drawerOpen, setDrawerOpen]);
 
-  const handleLogout = React.useCallback(() => {
-    Store.onRemoveToken();
-  }, [Store]);
+  // if (!UserHelper.isAuth) {
+  //   return null;
+  // }
 
   return (
     <div className={classes.root}>
@@ -29,11 +29,11 @@ export const User: React.FC = () => {
       <Header
         drawerOpen={drawerOpen}
         onDrawerToggleClick={handleDrawerToggle}
-        onLogout={handleLogout}
+        onLogout={UserHelper.logout as any}
       />
       <SideMenu
         drawerOpen={drawerOpen}
-        userName={Store.userName}
+        userName={UserHelper.username}
         onDrawerToggleClick={handleDrawerToggle}
       />
       <main className={classes.content}>

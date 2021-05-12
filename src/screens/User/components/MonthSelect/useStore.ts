@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../../../store/store.types';
-import { UserState } from '../../../../store/user/user.types';
+import { UserState } from '../../../../store/user/types';
 import * as UserActions from '../../../../store/user/actions';
 
 import { MONTHS } from './data';
@@ -17,12 +17,12 @@ export const useStore = (): Hook => {
   const user = useSelector<RootState, UserState>(state => state.user);
 
   const onSetMonth = (month: number) => {
-    dispatch(UserActions.setMonth(month));
+    // dispatch(UserActions.setMonth(month));
   }
 
   return {
-    month: user.month,
-    monthLabel: MONTHS[user.month],
+    month: 0,
+    monthLabel: MONTHS[0],
     onSetMonth,
   }
 }
