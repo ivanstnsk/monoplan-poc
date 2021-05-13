@@ -34,7 +34,7 @@ export const useApp = (): UseApp => {
         dispatch(UserActions.setUsername(username));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch(GlobalActions.setAuth('NOT-AUTH'));
     } finally {
       dispatch(GlobalActions.setLoading(false));
@@ -42,14 +42,12 @@ export const useApp = (): UseApp => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    checkAuth();
-  }, []);
-
-  React.useEffect(() => {
     if (authState === 'AUTH') {
       history.push('/');
     } else if (authState === 'NOT-AUTH') {
       history.push('/login');
+    } else if (authState === 'UNDEFINED') {
+      checkAuth();
     }
   }, [authState]);
 

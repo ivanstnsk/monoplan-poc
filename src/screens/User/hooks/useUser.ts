@@ -32,7 +32,7 @@ export const useUser = (): UseUser => {
     } catch (error) {
       console.log(error);
     } finally {
-      dispatch(GlobalActions.setAuth('NOT-AUTH'));
+      dispatch(GlobalActions.setAuth('UNDEFINED'));
       dispatch(GlobalActions.setLoading(false));
     }
   }, [dispatch, isLoading]);
