@@ -8,6 +8,7 @@ type GlobalReducer = Reducer<GlobalState, GlobalActionScheme>;
 const initState: GlobalState = {
   isLoading: false,
   authState: 'UNDEFINED',
+  error: undefined,
 };
 
 export const globalReducer: GlobalReducer = (
@@ -26,6 +27,12 @@ export const globalReducer: GlobalReducer = (
       return {
         ...state,
         authState,
+      }
+    case GlobalActions.SetError:
+      const { error } = payload as { error: string };
+      return {
+        ...state,
+        error,
       }
     default:
       return state;
