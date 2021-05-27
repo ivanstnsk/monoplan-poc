@@ -2,9 +2,10 @@ import * as React from 'react';
 import { Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 
 import { SideMenu, Header, Breadcrumbs } from './components';
-import { Dashboard, Planning, Categories } from './screens';
+import { Categories, Banks, Planning, Dashboard } from './screens';
 import { useStyles } from './styles';
 import { useUser } from './hooks';
 
@@ -18,10 +19,6 @@ export const User: React.FC = () => {
     console.log(drawerOpen, !drawerOpen)
     setDrawerOpen(!drawerOpen);
   }, [drawerOpen, setDrawerOpen]);
-
-  // if (!UserHelper.isAuth) {
-  //   return null;
-  // }
 
   return (
     <div className={classes.root}>
@@ -49,6 +46,25 @@ export const User: React.FC = () => {
           <Route path="/categories">
             <Categories />
           </Route>
+          <Route path="/banks">
+            <Banks />
+          </Route>
+          {/* <Button
+            // type="submit"
+            // fullWidth
+            variant="contained"
+            color="primary"
+          >
+            Button
+          </Button>
+          <Button
+            // type="submit"
+            // fullWidth
+            variant="contained"
+            color="secondary"
+          >
+            Button
+          </Button> */}
         </Container>
       </main>
     </div>

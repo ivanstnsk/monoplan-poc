@@ -9,13 +9,13 @@ import { authAPI } from '../../../api';
 
 interface UseUser {
   username: string;
-  isAuth: boolean;
+  // isAuth: boolean;
   logout: (event: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 export const useUser = (): UseUser => {
   const dispatch = Redux.useDispatch();
-  const { isLoading, authState } = Redux.useSelector<RootState, GlobalState>(state => state.global);
+  const { isLoading } = Redux.useSelector<RootState, GlobalState>(state => state.global);
   const { username } = Redux.useSelector<RootState, UserState>(state => state.user);
 
   const logout = React.useCallback(async (event: React.FormEvent<HTMLButtonElement>) => {
@@ -39,7 +39,7 @@ export const useUser = (): UseUser => {
 
   return {
     username,
-    isAuth: authState === 'AUTH',
+    // isAuth: authState === 'AUTH',
     logout,
   }
 }

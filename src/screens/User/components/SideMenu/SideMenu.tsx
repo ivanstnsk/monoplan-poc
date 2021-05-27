@@ -11,8 +11,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import ClassIcon from '@material-ui/icons/Class';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import CategoryIcon from '@material-ui/icons/Category';
 
 import { useStyles } from './styles';
@@ -24,23 +27,35 @@ const getUserAvatarSymbols = (name: string): string => {
 
 const renderItems = (getNavigateClickHandler: (path: string) => () => void): JSX.Element => (
   <>
+    <ListItem button onClick={getNavigateClickHandler('/dashboard')}>
+      <ListItemIcon>
+        <ClassIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItem>
     <ListItem button onClick={getNavigateClickHandler('/planning')}>
       <ListItemIcon>
-        <DateRangeIcon />
+        <ClassIcon />
       </ListItemIcon>
-      <ListItemText primary="Планування" />
+      <ListItemText primary="Planning" />
     </ListItem>
     <ListItem button onClick={getNavigateClickHandler('/categories')}>
       <ListItemIcon>
-        <CategoryIcon />
+        <ClassIcon />
       </ListItemIcon>
-      <ListItemText primary="Категорії доходів і витрат" />
+      <ListItemText primary="Categories" />
     </ListItem>
-    <ListItem button onClick={getNavigateClickHandler('/dashboard')}>
+    <ListItem button onClick={getNavigateClickHandler('/statements')}>
       <ListItemIcon>
-        <DashboardIcon />
+        <ReceiptIcon />
       </ListItemIcon>
-      <ListItemText primary="Дашборд" />
+      <ListItemText primary="Statements" />
+    </ListItem>
+    <ListItem button onClick={getNavigateClickHandler('/banks')}>
+      <ListItemIcon>
+        <AccountBalanceIcon />
+      </ListItemIcon>
+      <ListItemText primary="Banks" />
     </ListItem>
   </>
 );

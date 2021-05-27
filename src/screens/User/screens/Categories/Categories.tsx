@@ -1,103 +1,45 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
-import MaterialTable from 'material-table';
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Check from '@material-ui/icons/Check';
-import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import Edit from '@material-ui/icons/EditOutlined';
-import Search from '@material-ui/icons/Search';
 
-import { Category, CategoryType } from '../../../../store/categories/categories.types';
+import { EditableTable } from '../../components'
 
-import { useStore } from './useStore';
+import { useCategories } from './hooks';
 import { useStyles } from './styles';
 
 const COLUMNS = [
   { title: 'category', field: 'name' },
 ];
 
-const tableIcons = {
-  Add: React.forwardRef((props: any, ref) => <AddBox {...props} ref={ref} />),
-  Check: React.forwardRef((props: any, ref) => <Check {...props} ref={ref} />),
-  Clear: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
-  Delete: React.forwardRef((props: any, ref) => <DeleteOutline {...props} ref={ref} />),
-  Edit: React.forwardRef((props: any, ref) => <Edit {...props} ref={ref} />),
-  ResetSearch: React.forwardRef((props: any, ref) => <Clear {...props} ref={ref} />),
-  Search: React.forwardRef((props: any, ref) => <Search {...props} ref={ref} />),
-  SortArrow: React.forwardRef((props: any, ref) => <ArrowDownward {...props} ref={ref} />),
-};
-
-const renderTable = (
-  categoriesGroup: Record<string, Category>,
-  title: string,
-  onRowAdd: (newData: any) => Promise<void>,
-  onRowUpdate: (newData: any, oldData: any) => Promise<void>,
-  onRowDelete: (oldData: any) => Promise<void>,
-): JSX.Element => (
-    <Grid item xs={12} md={6}>
-      <MaterialTable
-        title={title}
-        columns={COLUMNS}
-        data={Object.values(categoriesGroup)}
-        editable={{
-          onRowAdd,
-          onRowUpdate,
-          onRowDelete,
-        }}
-        icons={tableIcons as any}
-        options={{
-          paging: false,
-          search: false,
-        }}
-      />
-    </Grid>
-  );
-
 export const Categories: React.FC = () => {
   const classes = useStyles();
-  const Store = useStore();
-
-  const getRowAddHandler = React.useCallback((categoryType: CategoryType) => {
-    return async (data: any): Promise<void> => {
-      Store.onAddCategory(categoryType, data.name);
-      return Promise.resolve();
-    }
-  }, [Store]);
-
-  const getRowUpdateHandler = React.useCallback((categoryType: CategoryType) => {
-    return async (data: any, oldData: any): Promise<void> => {
-      Store.onUpdateCategory(categoryType, data.id, data.name)
-      return Promise.resolve();
-    }
-  }, [Store]);
-
-  const getRowDeleteHandler = React.useCallback((categoryType: CategoryType) => {
-    return async (data: any): Promise<void> => {
-      const { id } = data;
-      Store.onDeleteCategory(categoryType, id);
-      return Promise.resolve();
-    }
-  }, [Store]);
+  const CategoriesIncomeHelper = useCategories('income');
+  const CategoriesExpensesHelper = useCategories('expenses');
 
   return (
     <div className={classes.paper}>
-      <Grid container spacing={4} className={classes.tableWrapper}>
-        {renderTable(
-          Store.expenses,
-          'Expenses',
-          getRowAddHandler('expenses'),
-          getRowUpdateHandler('expenses'),
-          getRowDeleteHandler('expenses')
-        )}
-        {renderTable(
-          Store.income,
-          'Income',
-          getRowAddHandler('income'),
-          getRowUpdateHandler('income'),
-          getRowDeleteHandler('income')
-        )}
+      <Grid container spacing={2} className={classes.tableWrapper}>
+        <EditableTable<Category>
+          xs={6}
+          md={6}
+          title="Expenses"
+          columns={COLUMNS}
+          data={CategoriesExpensesHelper.data}
+          isLoading={CategoriesExpensesHelper.isLoading}
+          onRowAdd={CategoriesExpensesHelper.rowAdd}
+          onRowUpdate={CategoriesExpensesHelper.rowUpdate}
+          onRowDelete={CategoriesExpensesHelper.rowDelete}
+        />
+        <EditableTable<Category>
+          xs={6}
+          md={6}
+          title="Income"
+          columns={COLUMNS}
+          data={CategoriesIncomeHelper.data}
+          isLoading={CategoriesIncomeHelper.isLoading}
+          onRowAdd={CategoriesIncomeHelper.rowAdd}
+          onRowUpdate={CategoriesIncomeHelper.rowUpdate}
+          onRowDelete={CategoriesIncomeHelper.rowDelete}
+        />
       </Grid>
     </div>
   );

@@ -6,76 +6,41 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
 import { store, persistor } from '../store';
 import { Login, Signup, User } from '../screens';
 
-import { useApp } from './hooks';
+import { useApp, useGlobalNotifications } from './hooks';
 import { useStyles } from './styles';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#43a047',
+      main: '#3aa15c',
     },
     secondary: {
-      main: '#388e3c'
+      main: '#285078'
     }
   }
 });
 
-const renderRoutes = (authState: AuthState, classes: any) => {
-  // if (authState === 'UNDEFINED') {
-  //   return null;
-  // }
-
-  console.log(authState)
-
-  return (
-    <SwitchTransition>
-      <CSSTransition
-        key={authState}
-        addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
-        classNames={{
-          enter: classes.fadeEnder,
-          enterActive: classes.fadeEnderActive,
-          exit: classes.exitEnder,
-          exitActive: classes.exitEnderActive,
-        }}
-      >
-        <div>
-          {authState === 'UNDEFINED' && (
-            <div>LOADING</div>
-          )}
-          {authState === 'AUTH' && (
-            <div>AUTH</div>
-          )}
-          {authState === 'NOT-AUTH' && (
-            <div>LOGIN</div>
-          )}
-        </div>
-      </CSSTransition>
-    </SwitchTransition>
-  )
-
-  return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/" component={User} />
-    </Switch>
-  );
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const AppInner: React.FC = () => {
   const classes = useStyles();
   const { isLoading, authState } = useApp();
+  const ToastHelper = useGlobalNotifications();
 
   return (
     <>
       <SwitchTransition>
         <CSSTransition
           key={authState}
+          // addEndListener={() => { }}
           addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
           classNames={{
             enter: classes.fadeEnter,
@@ -100,6 +65,11 @@ const AppInner: React.FC = () => {
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <Snackbar open={ToastHelper.isVisible} onClose={ToastHelper.onHide}>
+        <Alert onClose={ToastHelper.onHide} severity={ToastHelper.color}>
+          {ToastHelper.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
